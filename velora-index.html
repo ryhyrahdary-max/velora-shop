@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ولورا | فروشگاه آنلاین</title>
+<style>
+:root{--g:#17352b;--c:#f6efe3;--b:#9a7954;--gold:#b99658;--t:#2f2922}
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--c);color:var(--t)}
+header{background:var(--g);color:#fff;position:sticky;top:0;z-index:5;box-shadow:0 3px 15px #0002}.nav{max-width:1100px;margin:auto;padding:15px 20px;display:flex;align-items:center;gap:20px}
+.brand{font:700 32px Georgia;letter-spacing:5px;color:#e9d39f}.tag{font-size:12px;margin-right:auto;color:#eadfce}nav a{color:#fff;text-decoration:none;margin:0 6px;font-size:14px}
+.hero{max-width:1100px;margin:28px auto;padding:42px 20px;background:linear-gradient(135deg,#efe1cc,#fbf7ef);border:1px solid #d9c5a7;border-radius:24px;text-align:center}
+.logo{font:900 85px Georgia;color:var(--g);text-shadow:2px 2px 0 #c9a766;margin-bottom:-18px}.hero h1{font:700 38px Georgia;color:var(--g);margin:0}.hero p{color:#665746}.btn{display:inline-block;background:var(--g);color:#fff;border:0;border-radius:12px;padding:12px 22px;text-decoration:none}
+.container{max-width:1100px;margin:30px auto;padding:0 20px}.title{display:flex;justify-content:space-between;align-items:center}.title h2{color:var(--g)}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}.controls input,.controls select{padding:11px;border:1px solid #d4c1a7;border-radius:10px;background:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}.card{background:#fff;border-radius:18px;overflow:hidden;border:1px solid #e3d6c3;box-shadow:0 6px 18px #3a2c1b12}.pic{height:190px;background:linear-gradient(145deg,#e9dfd0,#c6b299);display:grid;place-items:center;color:var(--g);font:700 55px Georgia}.body{padding:15px}.body h3{margin:7px 0}.price{color:var(--g);font-weight:bold;margin:10px 0}.add{width:100%;background:var(--g);color:#fff;border:0;padding:10px;border-radius:10px;cursor:pointer}
+footer{margin-top:50px;background:var(--g);color:#eee;text-align:center;padding:28px 15px}#toast{position:fixed;bottom:20px;left:20px;background:var(--g);color:white;padding:12px 18px;border-radius:12px;display:none}
+@media(max-width:650px){nav{display:none}.tag{display:none}.hero{margin:15px}.logo{font-size:65px}}
+</style></head>
+<body>
+<header><div class="nav"><div class="brand">VELORA</div><div class="tag">پوشاک، اکسسوری و لوازم خانه</div><nav><a href="#products">محصولات</a><a href="#about">درباره ما</a><a href="#contact">تماس</a></nav><span>🛒 <b id="count">0</b></span></div></header>
+<section class="hero"><div class="logo">V</div><h1>ولورا</h1><p>انتخابی شیک برای سبک زندگی شما</p><a class="btn" href="#products">مشاهده محصولات</a></section>
+<main class="container" id="products"><div class="title"><h2>محصولات ولورا</h2><span id="total"></span></div>
+<div class="controls"><input id="search" placeholder="جستجوی محصول..."><select id="cat"><option value="all">همه دسته‌ها</option><option>پوشاک</option><option>اکسسوری</option><option>لوازم خانه</option></select></div><div class="grid" id="grid"></div></main>
+<section class="container" id="about"><div class="hero"><h2>درباره ولورا</h2><p>فروشگاهی مینیمال با ترکیب سبز، کرم و قهوه‌ای روشن.</p></div></section>
+<section class="container" id="contact"><div class="hero"><h2>تماس با ما</h2><p>برای سفارش و پشتیبانی با فروشگاه در ارتباط باشید.</p></div></section>
+<footer>© ۱۴۰۵ ولورا — همه حقوق محفوظ است</footer><div id="toast">به سبد خرید اضافه شد ✓</div>
+<script>
+const products=[["ست لباس راحتی","پوشاک","۸۹۰٬۰۰۰ تومان"],["کیف دستی ولورا","اکسسوری","۱٬۲۵۰٬۰۰۰ تومان"],["گردنبند ظریف","اکسسوری","۵۹۰٬۰۰۰ تومان"],["گلدان دکوراتیو","لوازم خانه","۷۲۰٬۰۰۰ تومان"],["شال کرم","پوشاک","۴۹۰٬۰۰۰ تومان"],["کوسن دکوراتیو","لوازم خانه","۳۸۰٬۰۰۰ تومان"]];
+let cart=0;const grid=document.getElementById("grid"),s=document.getElementById("search"),c=document.getElementById("cat");
+function render(){let a=products.filter(p=>(c.value=="all"||p[1]==c.value)&&p[0].includes(s.value.trim()));document.getElementById("total").textContent=a.length+" محصول";grid.innerHTML=a.map(p=>`<article class="card"><div class="pic">V</div><div class="body"><small>${p[1]}</small><h3>${p[0]}</h3><div class="price">${p[2]}</div><button class="add" onclick="add()">افزودن به سبد</button></div></article>`).join("")||"<p>محصولی پیدا نشد.</p>"}
+function add(){cart++;document.getElementById("count").textContent=cart;let t=document.getElementById("toast");t.style.display="block";setTimeout(()=>t.style.display="none",1200)}s.oninput=render;c.onchange=render;render();
+</script></body></html>
